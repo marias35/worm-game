@@ -1,10 +1,10 @@
-#define GPIO_BASE 0x04000060 // check GPIO_BASE in system.h file 
+#define GPIO_BASE 0x040000e0
 #define LED_BASE 0x04000000
 
 typedef enum direction{
-    up,
-    down,
-    right, 
-    left,
-    none
+    NONE = 0,
+    UP,
+    DOWN,
+    RIGHT, 
+    LEFT
 } direction;
