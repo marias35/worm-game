@@ -1,3 +1,5 @@
+//Wiktoria
+
 #include "input.h"
 
 direction read_direction(){
@@ -17,9 +19,14 @@ direction read_direction(){
     return NONE;
 }
 
+void block_reverse(){
 
+}
 
-int main(){
+//For testing
+//Lights up a corresponding led depending on the state of the joystick
+
+/* int main(){
     volatile int *leds = (volatile int*) LED_BASE;
 
     while (1) {
@@ -44,3 +51,4 @@ int main(){
         }
     }
 }
+*/
