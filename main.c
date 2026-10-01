@@ -1,7 +1,1 @@
-int main(void)
-{
-    while (1) {
-    }
-
-    return 0;
-}
+void handle_interrupt(unsigned int cause){}
