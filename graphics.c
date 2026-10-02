@@ -7,16 +7,35 @@
 
 static volatile uint8_t *frame_buffer = (volatile uint8_t *) VGA_FRAMEBUFFER;
 
+void swap_buffers(){
+    volatile int *dma_buffer = (volatile int*) VGA_DMA_BUFFER;
+    volatile int *dma_backbuffer = (volatile int*) VGA_DMA_BACKBUFFER;
+    volatile int *dma_status = (volatile int*) VGA_DMA_STATUS;
+
+    *dma_buffer = 0;
+
+    while(*dma_status & 1){}
+
+    frame_buffer = (volatile int*) dma_backbuffer;
+}
+
 void init_vga(){
     volatile int *dma_buffer = (volatile int*) VGA_DMA_BUFFER;
     volatile int *dma_backbuffer = (volatile int*) VGA_DMA_BACKBUFFER;
     volatile int *dma_status = (volatile int*) VGA_DMA_STATUS;
 
-    *dma_backbuffer = VGA_FRAMEBUFFER;
-    *dma_buffer = 0;
+    int frame1 = VGA_FRAMEBUFFER;
+    int frame2 = VGA_FRAMEBUFFER_2;
 
+    *dma_backbuffer = frame1;
+    *dma_buffer = 0;
     while(*dma_status & 1){}
 
+    frame_buffer = (volatile int*) frame1;
+    clear_screen(BLACK);
+
+    *dma_backbuffer = frame2;
+    frame_buffer = (volatile int*) frame1;
     clear_screen(BLACK);
 }
 
