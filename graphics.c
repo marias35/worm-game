@@ -2,6 +2,7 @@
 
 #include "graphics.h"
 #include "font8x8_basic.h"
+#include "sprites.h"
 #include <stdint.h>
 
 static volatile uint8_t *frame_buffer = (volatile uint8_t *) VGA_FRAMEBUFFER;
@@ -86,5 +87,16 @@ void draw_char(int x, int y, char c, uint8_t color){
 void draw_text(int x, int y, char *text, uint8_t color){
     for(int i = 0; text[i] != 0; i++){
         draw_char(x + i * 8, y, text[i], color);
+    }
+}
+
+void draw_sprite(int x, int y, const uint8_t *sprite){
+    for(int row = 0; row < SPRITE_SIZE; row++){
+        for(int col = 0; col < SPRITE_SIZE; col++){
+            uint8_t color = sprite[row * SPRITE_SIZE + col];
+            if(color != SPRITE_TRANSPARENT){
+                set_pixel(x + row, y + col, color);
+            }
+        }
     }
 }
