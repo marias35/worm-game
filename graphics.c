@@ -1,4 +1,4 @@
-//Wiktoria
+//Wiktoria - a lot of work 
 
 #include "graphics.h"
 #include "font8x8_basic.h"
