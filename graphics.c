@@ -8,36 +8,29 @@
 static volatile uint8_t *frame_buffer = (volatile uint8_t *) VGA_FRAMEBUFFER; 
 
 void swap_buffers(){
-    volatile int *dma_buffer = (volatile int*) VGA_DMA_BUFFER;
-    volatile int *dma_backbuffer = (volatile int*) VGA_DMA_BACKBUFFER;
-    volatile int *dma_status = (volatile int*) VGA_DMA_STATUS;
+    *(volatile int*) VGA_DMA_BUFFER = 0; //any write to the buffer requests a swap
 
-    *dma_buffer = 0; //any write to the buffer requests a swap
+    while(*(volatile int *)VGA_DMA_STATUS & 1){} //wait until the swap is done (lsb of status turns 0 when the swap is complete)
 
-    while(*dma_status & 1){} //wait until the swap is done (lsb of status turns 0 when the swap is complete)
-
-    frame_buffer = (volatile uint8_t*) *dma_backbuffer; //set the frame buffer to whatever is at the back buffer
+    frame_buffer = (volatile uint8_t*) *(volatile int *)VGA_DMA_BACKBUFFER; //set the frame buffer to whatever is at the back buffer
                                                     // we don't have to keep track of which frame is which 
                                                     // we just swap them when required 
 }
 
 void init_vga(){
-    volatile int *dma_buffer = (volatile int*) VGA_DMA_BUFFER;
-    volatile int *dma_backbuffer = (volatile int*) VGA_DMA_BACKBUFFER;
-    volatile int *dma_status = (volatile int*) VGA_DMA_STATUS;
 
     int frame1 = VGA_FRAMEBUFFER;
     int frame2 = VGA_FRAMEBUFFER_2;
 
-    *dma_backbuffer = frame1; // we set the back buffer to the first frame because we want to clean it first
-    *dma_buffer = 0; // any wirte to that variable requests a swap of buffers meaning that 
+    *(volatile int *)VGA_DMA_BACKBUFFER = frame1; // we set the back buffer to the first frame because we want to clean it first
+    *(volatile int *)VGA_DMA_BUFFER = 0; // any wirte to that variable requests a swap of buffers meaning that 
                     // first frame is going to be in the frame buffer
-    while(*dma_status & 1){} // we wait until the swpa is done
+    while(*(volatile int *)VGA_DMA_STATUS & 1){} // we wait until the swpa is done
 
     frame_buffer = (volatile uint8_t*) frame1; // we set the frame buffer to frame1 beacause that's our current frame
     clear_screen(BLACK);
 
-    *dma_backbuffer = frame2; // we set back buffer to frame2 so that the next swap will show that frame
+    *(volatile int *)VGA_DMA_BACKBUFFER = frame2;; // we set back buffer to frame2 so that the next swap will show that frame
     frame_buffer = (volatile uint8_t*) frame2; // we set frame_buffer to frame2 to all drawing goes there
     clear_screen(BLACK); // we clear that frame too
 }

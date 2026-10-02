@@ -1,9 +1,4 @@
-//Wiktoria 
-void draw_object(){}
-
 //Maria
-
-void init_objects(){}
 
 void spawn_object(){}
 

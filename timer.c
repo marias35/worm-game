@@ -81,6 +81,5 @@ void timer_interrupt(){
 
 // we give the left time
 int get_time_left(){ 
-
     return time_left;
 }
