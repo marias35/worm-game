@@ -1,11 +1,13 @@
+//Maria
+
 #include "timer.h"
 static volatile int time_left = 60; // we use volatile because we need to be able to hange those variables during interrupt handling
 static volatile int timeout_counter = 0; 
 static volatile int timer = 0; // if the timer runs or not
-#include "timer.h"
+
 
 extern void set_displays(int display_number, int value);
-//Wiktoria
+
 void set_displays(int display_number, int value)
 {
     volatile int *display = (volatile int *)(0x04000050 + display_number * 0x10); 
@@ -29,16 +31,17 @@ void set_displays(int display_number, int value)
 }
 
 void show_time(){
-int time = get_time_left();
-int minutes = time / 60;
-int seconds = time % 60;
-set_displays(0, seconds % 10);
-set_displays(1, seconds / 10);
-set_displays(2, minutes % 10);
-set_displays(3, minutes / 10);
+    int time = get_time_left();
+    int minutes = time / 60;
+    int seconds = time % 60;
+
+    set_displays(0, seconds % 10);
+    set_displays(1, seconds / 10);
+    set_displays(2, minutes % 10);
+    set_displays(3, minutes / 10);
 }
 
-//Maria
+
 
 // we set the time back to 60
 void init_timer(){ 
