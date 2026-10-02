@@ -16,7 +16,7 @@ void swap_buffers(){
 
     while(*dma_status & 1){} //wait until the swap is done (lsb of status turns 0 when the swap is complete)
 
-    frame_buffer = (volatile int*) *dma_backbuffer; //set the frame buffer to whatever is at the back buffer
+    frame_buffer = (volatile uint8_t*) *dma_backbuffer; //set the frame buffer to whatever is at the back buffer
                                                     // we don't have to keep track of which frame is which 
                                                     // we just swap them when required 
 }
@@ -34,16 +34,16 @@ void init_vga(){
                     // first frame is going to be in the frame buffer
     while(*dma_status & 1){} // we wait until the swpa is done
 
-    frame_buffer = (volatile int*) frame1; // we set the frame buffer to frame1 beacause that's our current frame
+    frame_buffer = (volatile uint8_t*) frame1; // we set the frame buffer to frame1 beacause that's our current frame
     clear_screen(BLACK);
 
     *dma_backbuffer = frame2; // we set back buffer to frame2 so that the next swap will show that frame
-    frame_buffer = (volatile int*) frame2; // we set frame_buffer to frame2 to all drawing goes there
+    frame_buffer = (volatile uint8_t*) frame2; // we set frame_buffer to frame2 to all drawing goes there
     clear_screen(BLACK); // we clear that frame too
 }
 
 void set_pixel(int x, int y, uint8_t color){
-    if(x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_WIDTH) // checks if (x,y) is in the range 
+    if(x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HEIGHT) // checks if (x,y) is in the range 
         return; 
     frame_buffer[y * SCREEN_WIDTH + x] = color; // if it is we set that pixel to the chosen color 
 }
@@ -124,7 +124,7 @@ void draw_sprite(int x, int y, const uint8_t *sprite){
             uint8_t color = sprite[row * SPRITE_SIZE + col]; 
             // if the color is not set to the flag transparent color we set that pixel
             if(color != SPRITE_TRANSPARENT){ 
-                set_pixel(x + row, y + col, color);
+                set_pixel(x + col, y + row, color);
             }
         }
     }
