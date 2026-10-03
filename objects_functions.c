@@ -39,7 +39,7 @@ void spawn_object(){
 
         if(!objects[i].active){    // //we look for the first inactive object 
 
-            objects[i].type = random_number() % 4; //we choose the fruit type using random_number and %4 to select one of the 4 fruit options (0-3)
+            objects[i].type = random_number() % 6; //we choose the fruit type using random_number and %6 to select one of the 6 object options (0-5)
             random_free_position( &objects[i].x, &objects[i].y ); //find a random position diff than the position of the already active objects
             objects[i].active = 1;
             return; // only one object is spawned each call
@@ -78,7 +78,7 @@ while(!free_position){
 
 void respawn_object(int index){
     objects[index].active = 0; 
-    objects[index].type = random_number() % 4; // the object gets a new fruit type
+    objects[index].type = random_number() % 6; // the object gets a new object type
     random_free_position(&objects[index].x, &objects[index].y); // it gets a new available position 
     objects[index].active = 1;
 }
@@ -103,6 +103,12 @@ void apply_fruit_effect(ObjectType type){
         case STRAWBERRY:
             change_speed(1);
             break;
+        case HAPPY_FACE:
+            face = FACE_HAPPY;
+            break;
+        case SAD_FACE:
+            face = FACE_SAD;
+            break;
     }
 }
 
@@ -124,6 +130,12 @@ void draw_objects(){
                     break;
                 case STRAWBERRY:
                     draw_sprite(objects[i].x, objects[i].y, sprite_strawberry);
+                    break;
+                case HAPPY_FACE:
+                     draw_sprite(objects[i].x, objects[i].y, sprite_smile);
+                     break;
+                case SAD_FACE:
+                    draw_sprite(objects[i].x, objects[i].y, sprite_sad);
                     break;
             }
         }

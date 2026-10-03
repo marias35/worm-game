@@ -7,7 +7,9 @@ typedef enum {
     APPLE,
     GRAPES,
     WATERMELON,
-    STRAWBERRY
+    STRAWBERRY,
+    HAPPY_FACE,
+    SAD_FACE
 } ObjectType;
 typedef struct {
     int x;
