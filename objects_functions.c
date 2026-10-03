@@ -77,6 +77,7 @@ while(!free_position){
 //respawns an object after it has been collected
 
 void respawn_object(int index){
+    objects[index].active = 0; 
     objects[index].type = random_number() % 4; // the object gets a new fruit type
     random_free_position(&objects[index].x, &objects[index].y); // it gets a new available position 
     objects[index].active = 1;
