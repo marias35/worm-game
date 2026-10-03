@@ -4,7 +4,7 @@
 static volatile int time_left = 60; // we use volatile because we need to be able to hange those variables during interrupt handling
 static volatile int timeout_counter = 0; 
 static volatile int timer = 0; // if the timer runs or not
-
+static volatile int movement_counter = 0;
 
 extern void set_displays(int display_number, int value);
 
@@ -48,6 +48,7 @@ void init_timer(){
     time_left = 60;
     timer = 0;
     timeout_counter = 0;
+    movement_counter = 0;
     *(volatile int *)TIMER_PERIODL = 0xC6C0;
     *(volatile int *)TIMER_PERIODH = 0x002D;
     *(volatile int *)TIMER_STATUS = 0;
@@ -67,6 +68,7 @@ void timer_interrupt(){
 
     if(timer){
         timeout_counter++;
+        movement_counter++;
         if(timeout_counter == 10){
             timeout_counter = 0;
             if(time_left > 0){
@@ -82,4 +84,12 @@ void timer_interrupt(){
 // we give the left time
 int get_time_left(){ 
     return time_left;
+}
+//return how many 0.1 seconds timer interrupts happened
+int get_movement_counter(){
+    return movement_counter;
+}
+
+void reset_movement_counter(){
+    movement_counter = 0;
 }

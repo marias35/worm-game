@@ -14,22 +14,34 @@ void handle_interrupt(unsigned int cause){
     }
 }
 
-void game_init(){
+void start(){
     init_vga();
-    init_worm();
-
     init_timer();
+    game_init();
     enable_interrupt();
-    start_timer();
 }
 
 int main()
 {
-    game_init();
+    start();
+    game_start();
     while (1) {
+        if(!game_is_over()){
+            update_game();
+            if(get_time_left() == 0){
+                game_end();
+            }
         render_frame();
         show_time();
         swap_buffers();
+
+        }
+        else{
+            clear_screen(BLACK);
+            draw_border();
+            show_game_over();
+            swap_buffers();
+        }
     }
     return 0;
 }

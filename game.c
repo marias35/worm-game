@@ -9,14 +9,14 @@
 #include <stdint.h>
 
 static int score = 0; 
-
+static int game_over = 0;
 void render_frame(){
     // add a condition for checking if game is over
     clear_screen(BLACK);
     draw_border();
-    // draw_objects();
+    draw_objects();
     draw_worm();
-    draw_face();
+   // draw_face();
     draw_score();
 }
 
@@ -46,19 +46,54 @@ void show_game_over(){
 
 //Maria 
 
-void game_start(){}
+void game_init(){
+    score = 0;
+    game_over = 0;
+    init_worm();
+    init_objects();
+}
 
+void game_start(){
+    game_over = 0;
+    start_timer();
+}
 
-void update_game(){}
+void update_game(){
+    if(game_is_over()) return;
+    set_direction();
+    if(worm_should_move()){
+        move_worm();
+        check_wall_collision();
+        check_self_collision();
+        check_fruit_collision();
+    }
+}
 
-void check_fruit_collision(){}
+void check_fruit_collision(){
+    int head_x = worm_body[0][0];
+    int head_y = worm_body[0][1];
+    int index = find_object_collision(head_x, head_y);
+    if(index != -1){
+        ObjectType type = get_object_type(index);
 
-void update_score(){}
+        apply_fruit_effect(type);
+        grow_worm();
+        respawn_object(index);
+    }
+}
+
+void update_score(int points){
+    score += points;
+}
 
 int get_score(){
     return score;
 }
 
-void game_is_over(){}
+int game_is_over(){
+    return game_over;
+}
 
-void game_end(){}
+void game_end(){
+    game_over = 1;
+}
