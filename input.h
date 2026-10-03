@@ -12,4 +12,7 @@ typedef enum direction{
     LEFT
 } direction;
 
+direction read_direction();
+direction current_direction(direction current, direction requested);
+
 #endif

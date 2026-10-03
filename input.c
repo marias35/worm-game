@@ -3,9 +3,7 @@
 #include "input.h"
 
 direction read_direction(){
-    volatile int *gpio_data = (volatile int*) GPIO_BASE;
-
-    int all_pins = *gpio_data;
+    int all_pins = *(volatile int*) GPIO_BASE;
 
     int up    = !(all_pins & 1);
     int down  = !((all_pins >> 1) & 1);
@@ -19,8 +17,21 @@ direction read_direction(){
     return NONE;
 }
 
-void block_reverse(){
-
+direction current_direction(direction current, direction requested){
+    if(requested == NONE)
+        return current;
+    
+    // the worm can't turn on itself so we check if the requested direction is not oppposite to the current one
+    if(current == UP && requested == DOWN)
+        return current;
+    if(current == DOWN && requested == UP)
+        return current;
+    if(current == RIGHT && requested == LEFT)
+        return current;
+    if(current == LEFT && requested == RIGHT)
+        return current;
+    
+    return requested;
 }
 
 //For testing

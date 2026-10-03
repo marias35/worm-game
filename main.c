@@ -1,11 +1,12 @@
 //Wiktoria
 
-#include "graphics.h"
-#include "sprites.h"
 #include "timer.h"
+#include "graphics.h"
+#include "game.h"
+#include "worm.h"
 #include <stdint.h>
 
-extern void enable_interrupt(void);
+extern void enable_interrupt();
 
 void handle_interrupt(unsigned int cause){
     if (cause == 0x10){
@@ -13,36 +14,22 @@ void handle_interrupt(unsigned int cause){
     }
 }
 
-void gameinit(void){
-    init_timer();
+void game_init(){
     init_vga();
-    draw_border();
+    init_worm();
+
+    init_timer();
     enable_interrupt();
+    start_timer();
 }
 
-int main(){
-    gameinit();
-
-    start_timer();
-    
-
-    while (1){
+int main()
+{
+    game_init();
+    while (1) {
+        render_frame();
         show_time();
-        // Happy Worm game will go here
+        swap_buffers();
     }
     return 0;
-}
-
-int main(){
-    
-    draw_text(200, 200, "HELLO!", WHITE);
-    draw_sprite(100, 100, sprite_watermelon);
-    draw_sprite(150,150, sprite_strawberry);
-    draw_sprite(160,160, sprite_apple);
-    draw_sprite(170,170, sprite_grapes);
-    draw_sprite(180,180, sprite_sad);
-    draw_sprite(190,190, sprite_smile);
-
-    swap_buffers();
-
 }
