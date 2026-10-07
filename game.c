@@ -11,19 +11,17 @@
 static int score = 0; 
 static int game_over = 0;
 void render_frame(){
-    // add a condition for checking if game is over
     clear_screen(BLACK);
     draw_border();
     draw_objects();
     draw_worm();
-   // draw_face();
     draw_score(4, 4);
 }
 
 void draw_score(int x, int y){
     int score = get_score();
-    // the x value we reach after printing SCORE: + space 4 pixels away from the end of the screen
-    // 4 + 6*8 + 8 = 60
+    // the x value we reach after printing "SCORE: " + the x-position
+    // x + 6*8 + 8 = 54 + x
     int space = 54 + x; 
 
     draw_text(x, y, "SCORE: ", WHITE);
@@ -61,7 +59,7 @@ void game_start(){
 
 void update_game(){
     if(game_is_over()) return;
-    set_direction();
+        set_direction();
     if(worm_should_move()){
         move_worm();
         check_wall_collision();
