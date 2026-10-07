@@ -2,7 +2,7 @@
 #define GAME_H
   
 void render_frame(); 
-void draw_score();
+void draw_score(int x, int y);
 void show_game_over();
 
 void game_init();

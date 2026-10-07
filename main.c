@@ -4,6 +4,8 @@
 #include "graphics.h"
 #include "game.h"
 #include "worm.h"
+#include "input.h"
+#include "objects_functions.h"
 #include <stdint.h>
 
 extern void enable_interrupt();
@@ -17,6 +19,18 @@ void handle_interrupt(unsigned int cause){
 void start(){
     init_vga();
     init_timer();
+
+    unsigned int count = 0;
+    while(read_direction() == NONE){
+        count++;
+        clear_screen(BLACK);
+        draw_border();
+        draw_text(78, 116, "MOVE JOYSTICK TO START", WHITE);
+        swap_buffers();
+
+    }
+
+    set_seed(count);
     game_init();
     enable_interrupt();
 }

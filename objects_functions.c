@@ -14,9 +14,17 @@ static Object objects[MAX_OBJECTS]; //array with the 3 objects currently used in
 
 static unsigned int random_seed = 12345;
 
+void set_seed(unsigned int seed){
+    random_seed = seed;
+}
+
 static unsigned int random_number(){
     random_seed = random_seed * 1103515245 + 12345;
     return random_seed;
+}
+
+void stir_random(){
+    random_number();
 }
 
 //we initialize all objects.
@@ -52,26 +60,26 @@ void spawn_object(){
 
 void random_free_position(int *x, int *y){
 
-int free_position = 0; // we generate positions until a free one is found
+    int free_position = 0; // we generate positions until a free one is found
 
-while(!free_position){
+    while(!free_position){
 
-    *x = 1 + random_number() % (SCREEN_WIDTH - SPRITE_SIZE - 1); // we start from 1 to leave room for the 1 pixel border
-    *y = 1 + random_number() % (SCREEN_HEIGHT - SPRITE_SIZE - 1); //we must make sure to have enough space for the sprite so we substract the size of it and 1
-    free_position = 1;
+        *x = 1 + random_number() % (SCREEN_WIDTH - SPRITE_SIZE - 1); // we start from 1 to leave room for the 1 pixel border
+        *y = 1 + random_number() % (SCREEN_HEIGHT - SPRITE_SIZE - 1); //we must make sure to have enough space for the sprite so we substract the size of it and 1
+        free_position = 1;
 
-    for(int i = 0; i < MAX_OBJECTS; i++){
-        if(objects[i].active){  // only compare with objects that currently exist
-            if((*x < (objects[i].x + SPRITE_SIZE)) && // new object's left side < active object right side
-               ((*x + SPRITE_SIZE) > objects[i].x) &&  // new right side > active left side
-               (*y < (objects[i].y + SPRITE_SIZE)) &&  // new object top is above active object bottom
-               ((*y + SPRITE_SIZE) > objects[i].y)){   //new object bottom is under active object top
-                free_position = 0;
-                break;
+        for(int i = 0; i < MAX_OBJECTS; i++){
+            if(objects[i].active){  // only compare with objects that currently exist
+                if((*x < (objects[i].x + SPRITE_SIZE)) && // new object's left side < active object right side
+                ((*x + SPRITE_SIZE) > objects[i].x) &&  // new right side > active left side
+                (*y < (objects[i].y + SPRITE_SIZE)) &&  // new object top is above active object bottom
+                ((*y + SPRITE_SIZE) > objects[i].y)){   //new object bottom is under active object top
+                    free_position = 0;
+                    break;
+                }
             }
         }
     }
-}
 }
 
 //respawns an object after it has been collected
@@ -98,10 +106,10 @@ void apply_fruit_effect(ObjectType type){
             update_score(5);
             break;
         case WATERMELON:
-            change_speed(-1);
+            change_speed(-3);
             break;
         case STRAWBERRY:
-            change_speed(1);
+            change_speed(3);
             break;
         case HAPPY_FACE:
             face = FACE_HAPPY;

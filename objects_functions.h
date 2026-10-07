@@ -18,6 +18,7 @@ typedef struct {
     int active;
 } Object;
 
+void set_seed(unsigned int seed);
 void init_objects();
 void spawn_object();
 void random_free_position(int *x, int *y);

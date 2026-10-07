@@ -17,31 +17,32 @@ void render_frame(){
     draw_objects();
     draw_worm();
    // draw_face();
-    draw_score();
+    draw_score(4, 4);
 }
 
-void draw_score(){
+void draw_score(int x, int y){
     int score = get_score();
     // the x value we reach after printing SCORE: + space 4 pixels away from the end of the screen
     // 4 + 6*8 + 8 = 60
-    int x = 60; 
+    int space = 54 + x; 
 
-    draw_text(4, 4, "SCORE: ", WHITE);
+    draw_text(x, y, "SCORE: ", WHITE);
 
     if(score >= 100){
         // we add the digit to '0' as this way we obtain the ascii code for it 
-        draw_char(x, 4, (char) ('0' + (score / 100) % 10), WHITE); 
-        x += 8;
+        draw_char(space, y, (char) ('0' + (score / 100) % 10), WHITE); 
+        space += 8;
     }
     if(score >= 10){
-        draw_char(x, 4, (char) ('0' + (score / 10) % 10), WHITE);
-        x += 8;
+        draw_char(space, y, (char) ('0' + (score / 10) % 10), WHITE);
+        space += 8;
     }
-    draw_char(x, 4, (char) ('0' + score % 10), WHITE);
+    draw_char(space, y, (char) ('0' + score % 10), WHITE);
 }
 
 void show_game_over(){
     draw_text(129, 116, "GAME OVER", WHITE);
+    draw_score(129 , 126);
 }
 
 //Maria 
