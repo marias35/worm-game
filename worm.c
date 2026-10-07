@@ -25,8 +25,7 @@ void draw_face(){
         draw_sprite(worm_body[0][0], worm_body[0][1], worm_smile);
     else{
         draw_sprite(worm_body[0][0], worm_body[0][1], worm_sad);
-    }
-    
+    } 
 }
 
 //Maria
@@ -115,11 +114,9 @@ void check_wall_collision(){
     //we check the right/left & top/bottom borders;
     // x is the left side of the head, while x + sprite_size is the right side;
     if( (x < BORDER_THICKENSS) || ( ( x + SPRITE_SIZE ) > ( SCREEN_WIDTH - BORDER_THICKENSS) ) ){
-        face = FACE_SAD;
         game_end();
     }
     if( (y < BORDER_THICKENSS) || ( (y + SPRITE_SIZE) > (SCREEN_HEIGHT - BORDER_THICKENSS) ) ){
-        face = FACE_SAD;
         game_end();
     }
 }

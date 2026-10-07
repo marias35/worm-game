@@ -23,10 +23,6 @@ static unsigned int random_number(){
     return random_seed;
 }
 
-void stir_random(){
-    random_number();
-}
-
 //we initialize all objects.
 //at the beginning all objects are marked inactive
 //then we spawn the 3 objects and those become active
