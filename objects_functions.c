@@ -10,12 +10,12 @@ static Object objects[MAX_OBJECTS]; //array with the 3 objects currently used in
 // because we compile without C standard library 
 // LCG formula: X(n+1) = (a * X(n) + c) mod m
 // a= 1103515245 and c = 12345 and m = 2^32
-// a and c are nto random, they are well-known values used in the C standard library"s rand()
+// a and c are not random, they are well-known values used in the C standard library's rand()
 // we dont need to calculate mod 2^32 ourselves, random_seed is a 32-bit unsigned int 
-// so when the results is too big it wraps up
+// so when the results is too big it wraps around
 
 // random_seed holds X(n) which is the last number generated 
-// at the start it holds the seed which set in main.c
+// at the start it holds the seed which is set in main.c
 
 static unsigned int random_seed = 0;
 
@@ -87,11 +87,13 @@ void respawn_object(int index){
     objects[index].active = 1;
 }
 
-//we apply effects to collected fruits
+//we apply effects to collected fruits and emojis
 // APPLE - adds 1 point;
 // GRAPES - adds 5 points;
 // WATERMELON - increases worm speed by decreasing the movement interval;
 // STRAWBERRY - decreases worm speed by increasing the movement interval;
+// HAPPY_FACE - change expression of the worm to happy
+// SAD_FACE - change expression of the worm to sad
 
 void apply_fruit_effect(ObjectType type){
     switch(type){

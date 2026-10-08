@@ -96,7 +96,7 @@ void grow_worm(){
 }
 
 void change_speed(int amount){
-    //changes the movement speed by the amount givent by a fruit
+    //changes the movement speed by the amount given by a fruit
     //a negative amount = faster and a positive amount = slower
     worm_speed += amount;
     

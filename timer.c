@@ -2,7 +2,7 @@
 
 #include "timer.h"
 // we use volatile here because these values can be changed by the timer interrupt 
-// it makes the main code read the variables from the memory every time so the main code for usre sees the newest value
+// it makes the main code read the variables from the memory every time so the main code for sure sees the newest value
 static volatile int time_left = 120; 
 static volatile int timeout_counter = 0; 
 static volatile int timer = 0; // if the timer runs or not
@@ -15,7 +15,7 @@ void set_displays(int display_number, int value)
     volatile int *display = (volatile int *)(0x04000050 + display_number * 0x10); 
 
     int display_values[] = {
-      //  decimal point + abcdefg are the led segments 
+      //  decimal point + gfedcba are the led segments 
       // 0 means it's on 1 means it's off
         0b01000000, // 0
         0b01111001, // 1

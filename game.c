@@ -22,8 +22,8 @@ void render_frame(){
 void draw_score(int x, int y){
     int score = get_score();
     // the x value we reach after printing "SCORE: " + the x-position
-    // x + 6*8 + 8 = 54 + x
-    int space = 54 + x; 
+    // x + 6*8 + 8 = 56 + x
+    int space = 56 + x; 
 
     draw_text(x, y, "SCORE: ", WHITE);
 
@@ -62,7 +62,7 @@ void update_game(){
     if(game_is_over()) return;
 
     set_direction();
-    
+
     if(worm_should_move()){
         move_worm();
         check_wall_collision();
