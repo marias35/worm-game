@@ -3,6 +3,9 @@
 
 //Wiktoria 
 
+// arrays of 100 elemetnts holding values for each pixel 
+// to access an (x, y) pixel we do (y * SPRITE_SIZE + x)
+
 const uint8_t sprite_apple[100]={227, 227, 227, 227, 136, 227, 28, 227, 227, 227, 
                     227, 227, 227, 227, 136, 28, 227, 227, 227, 227, 
                     227, 227, 224, 224, 224, 224, 224, 224, 227, 227, 

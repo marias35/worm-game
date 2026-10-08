@@ -8,7 +8,7 @@
  // the sprite size is 10x10 pixels
 #define SPRITE_SIZE 10
 // 227 = magenta, is the flag color for not setting that pixel, 
-// magenta was chosen as that color becuase it is not going to be sued anywhere else
+// magenta was chosen as that color because it is not going to be used anywhere else
 #define SPRITE_TRANSPARENT 227 
 
 extern const uint8_t sprite_apple[100];

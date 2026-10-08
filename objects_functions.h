@@ -3,7 +3,7 @@
 
 #define MAX_OBJECTS 3
 
-typedef enum {
+typedef enum ObjectType{
     APPLE,
     GRAPES,
     WATERMELON,
@@ -11,7 +11,7 @@ typedef enum {
     HAPPY_FACE,
     SAD_FACE
 } ObjectType;
-typedef struct {
+typedef struct Object{
     int x;
     int y;
     ObjectType type;
