@@ -6,13 +6,18 @@
 //Maria
 static Object objects[MAX_OBJECTS]; //array with the 3 objects currently used in the game
 
-//we implement a linear congruential pseudo-random generator to replace the rand()
-//an LCG formula: X(n+1) = (a * X(n) + c) mod m
-// a= 1103515245 and c = 12345;
-// the seed stores the current X(n), since random_seed is unsigned int 
-//it wraps around when excedes the max value of this type; with 32-bit unsigned int it gives modulo 2^32 
+// we implement a linear congruential pseudo-random generator to replace the rand() 
+// because we compile without C standard library 
+// LCG formula: X(n+1) = (a * X(n) + c) mod m
+// a= 1103515245 and c = 12345 and m = 2^32
+// a and c are nto random, they are well-known values used in the C standard library"s rand()
+// we dont need to calculate mod 2^32 ourselves, random_seed is a 32-bit unsigned int 
+// so when the results is too big it wraps up
 
-static unsigned int random_seed = 12345;
+// random_seed holds X(n) which is the last number generated 
+// at the start it holds the seed which set in main.c
+
+static unsigned int random_seed = 0;
 
 void set_seed(unsigned int seed){
     random_seed = seed;
@@ -40,28 +45,23 @@ void init_objects(){
 
 void spawn_object(){
     for(int i = 0; i < MAX_OBJECTS; i++){
-
         if(!objects[i].active){    //we look for the first inactive object 
-
             objects[i].type = random_number() % 6; //we choose the object type using random_number and %6 to select one of the 6 object options (0-5)
-            random_free_position( &objects[i].x, &objects[i].y ); //find a random position diff than the position of the already active objects
+            random_free_position(&objects[i].x, &objects[i].y); //find a random position diff than the position of the already active objects
             objects[i].active = 1;
             return; // only one object is spawned each call
-
         }
-
     }
-
 }
 
 void random_free_position(int *x, int *y){
-
     int free_position = 0; // we generate positions until a free one is found
 
     while(!free_position){
-
-        *x = 1 + random_number() % (SCREEN_WIDTH - SPRITE_SIZE - 1); // we start from 1 to leave room for the 1 pixel border
-        *y = 1 + random_number() % (SCREEN_HEIGHT - SPRITE_SIZE - 1); //we must make sure to have enough space for the sprite so we substract the size of it and 1
+        // + BORDER_THICKNESS keeps the sprite off the border
+        //we must make sure to have enough space for the sprite so we substract the size of it and BORDER_THICKNESS
+        *x = BORDER_THICKENSS + random_number() % (SCREEN_WIDTH - SPRITE_SIZE - BORDER_THICKENSS); 
+        *y = BORDER_THICKENSS + random_number() % (SCREEN_HEIGHT - SPRITE_SIZE - BORDER_THICKENSS); 
         free_position = 1;
 
         for(int i = 0; i < MAX_OBJECTS; i++){
