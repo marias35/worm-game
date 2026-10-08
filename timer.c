@@ -45,7 +45,7 @@ void show_time(){
 
 
 
-// we set the time back to 60
+// we set the time back to 120
 void init_timer(){ 
     time_left = 120;
     timer = 0;

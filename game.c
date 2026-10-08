@@ -60,7 +60,9 @@ void game_start(){
 
 void update_game(){
     if(game_is_over()) return;
-        set_direction();
+
+    set_direction();
+    
     if(worm_should_move()){
         move_worm();
         check_wall_collision();
