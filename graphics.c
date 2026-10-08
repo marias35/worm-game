@@ -1,11 +1,14 @@
-//Wiktoria - a lot of work 
+//Wiktoria 
 
 #include "graphics.h"
 #include "font8x8_basic.h"
 #include "sprites.h"
 #include <stdint.h>
 
-static volatile uint8_t *frame_buffer = (volatile uint8_t *) VGA_FRAMEBUFFER; 
+
+// we define the frame buffer as uint8_t because it points to the first pixel in the frame
+// pixels are defined as 8-bit non-negative values each bit corresponing to a color value in a pattern of RRRGGGBB
+static volatile uint8_t *frame_buffer = (volatile uint8_t *) VGA_FRAMEBUFFER;  
 
 void swap_buffers(){
     *(volatile int*) VGA_DMA_BUFFER = 0; //any write to the buffer requests a swap
@@ -22,16 +25,16 @@ void init_vga(){
     int frame1 = VGA_FRAMEBUFFER;
     int frame2 = VGA_FRAMEBUFFER_2;
 
-    *(volatile int *)VGA_DMA_BACKBUFFER = frame1; // we set the back buffer to the first frame because we want to clean it first
-    *(volatile int *)VGA_DMA_BUFFER = 0; // any wirte to that variable requests a swap of buffers meaning that 
-                    // first frame is going to be in the frame buffer
-    while(*(volatile int *)VGA_DMA_STATUS & 1){} // we wait until the swpa is done
+    *(volatile int *)VGA_DMA_BACKBUFFER = frame1; // we make frame1 the next frame, so after the swap we know which frame is displayed
+    *(volatile int *)VGA_DMA_BUFFER = 0; // any write to that variable requests a swap of buffers meaning that 
+                                        // first frame is going to be in the frame buffer
+    while(*(volatile int *)VGA_DMA_STATUS & 1){} // we wait until the swap is done
 
     frame_buffer = (volatile uint8_t*) frame1; // we set the frame buffer to frame1 beacause that's our current frame
     clear_screen(BLACK);
 
-    *(volatile int *)VGA_DMA_BACKBUFFER = frame2;; // we set back buffer to frame2 so that the next swap will show that frame
-    frame_buffer = (volatile uint8_t*) frame2; // we set frame_buffer to frame2 to all drawing goes there
+    *(volatile int *)VGA_DMA_BACKBUFFER = frame2; // we set back buffer to frame2 so that the next swap will show that frame
+    frame_buffer = (volatile uint8_t*) frame2; // we set frame_buffer to frame2 so all drawing goes there
     clear_screen(BLACK); // we clear that frame too
 }
 
@@ -91,7 +94,7 @@ void draw_border(){
 void draw_char(int x, int y, char c, uint8_t color){
     uint8_t line;
 
-    if(c < 0 || c > 127){ // if the character is not in the avaible range of characters we return
+    if(c < 0 || c > 127){ // if the character is not in the avaiable range of characters we return
         return;
     }
 

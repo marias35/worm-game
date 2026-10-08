@@ -4,12 +4,13 @@
 
 direction read_direction(){
     int all_pins = *(volatile int*) GPIO_BASE;
-
+    // 0 = pressed, 1 = not pressed -> that's why we reverse the input -> so int values are 1 when directions is pressed
     int up    = !(all_pins & 1);
     int down  = !((all_pins >> 1) & 1);
     int right = !((all_pins >> 2) & 1);
     int left  = !((all_pins >> 3) & 1);
 
+    // if for example both UP and RIGHT are 1, RIGHT will be discarded as it's third if-statement
     if (up) return UP;
     if (down) return DOWN;
     if (right) return RIGHT;
@@ -33,33 +34,3 @@ direction current_direction(direction current, direction requested){
     
     return requested;
 }
-
-//For testing
-//Lights up a corresponding led depending on the state of the joystick
-
-/* int main(){
-    volatile int *leds = (volatile int*) LED_BASE;
-
-    while (1) {
-        direction state = read_direction();
- 
-        switch (state){
-            case UP: 
-                *leds = 0b0001; 
-                break;
-            case DOWN: 
-                *leds = 0b0010; 
-                break;
-            case RIGHT: 
-                *leds = 0b0100; 
-                break;
-            case LEFT: 
-                *leds = 0b1000; 
-                break;
-            default: 
-                *leds = 0b0000; 
-                break;
-        }
-    }
-}
-*/

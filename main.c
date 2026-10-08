@@ -1,4 +1,4 @@
-//Wiktoria
+//Wiktoria + Maria
 
 #include "timer.h"
 #include "graphics.h"
@@ -20,6 +20,9 @@ void start(){
     init_vga();
     init_timer();
 
+    // we count loop iterations while the player doesn't move the joystick
+    // that number is going to be different every time which allows us to obtain a different seed for the LCG formula
+    // resulting in pseudo random positions and objects for each new game
     unsigned int count = 0;
     while(read_direction() == NONE){
         count++;

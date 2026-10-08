@@ -1,4 +1,4 @@
-//Wiktoria 
+
 
 #include "graphics.h"
 #include "sprites.h"
@@ -10,6 +10,8 @@
 
 static int score = 0; 
 static int game_over = 0;
+
+//Wiktoria 
 void render_frame(){
     clear_screen(BLACK);
     draw_border();

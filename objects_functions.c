@@ -41,9 +41,9 @@ void init_objects(){
 void spawn_object(){
     for(int i = 0; i < MAX_OBJECTS; i++){
 
-        if(!objects[i].active){    // //we look for the first inactive object 
+        if(!objects[i].active){    //we look for the first inactive object 
 
-            objects[i].type = random_number() % 6; //we choose the fruit type using random_number and %6 to select one of the 6 object options (0-5)
+            objects[i].type = random_number() % 6; //we choose the object type using random_number and %6 to select one of the 6 object options (0-5)
             random_free_position( &objects[i].x, &objects[i].y ); //find a random position diff than the position of the already active objects
             objects[i].active = 1;
             return; // only one object is spawned each call
@@ -148,7 +148,7 @@ void draw_objects(){
 int find_object_collision(int x, int y){
     for(int i = 0; i < MAX_OBJECTS; i++){
         if(objects[i].active){
-            if( (x < (objects[i].x + SPRITE_SIZE)) &&
+            if((x < (objects[i].x + SPRITE_SIZE)) &&
                 ((x + SPRITE_SIZE > objects[i].x)) &&
                 (y < (objects[i].y + SPRITE_SIZE)) &&
                 ((y + SPRITE_SIZE) > objects[i].y)){
