@@ -3,8 +3,6 @@
 #include "graphics.h"
 #include "font8x8_basic.h"
 #include "sprites.h"
-#include <stdint.h>
-
 
 // we define the frame buffer as uint8_t because it points to the first pixel in the frame
 // pixels are defined as 8-bit non-negative values each bit corresponing to a color value in a pattern of RRRGGGBB

@@ -5,7 +5,7 @@
 
 int worm_body[MAX_WORM_LENGTH][2];
 int worm_length;
-static int worm_speed = WORM_START_SPEED; //determine how many 0.1 seconds time ticks must pass before the woerm moves
+static int worm_speed = WORM_START_SPEED; //determine how many 0.1 seconds time ticks must pass before the worm moves
 WormFace face;
 
 direction worm_direction;
@@ -126,10 +126,10 @@ void check_self_collision(){
     int head_y = worm_body[0][1];
 
     for(int i = 1; i < worm_length; i++){ // we start from 1 because worm_body[0] is the head and we do not want to compare the head with itself
-        if( (head_x < (worm_body[i][0] + SPRITE_SIZE) ) && 
-            ( (head_x + SPRITE_SIZE) > worm_body[i][0]) &&
-            (head_y < (worm_body[i][1] + SPRITE_SIZE) ) &&
-            ( (head_y + SPRITE_SIZE) > worm_body[i][1]) ){
+        if((head_x < (worm_body[i][0] + SPRITE_SIZE)) && 
+            ((head_x + SPRITE_SIZE) > worm_body[i][0]) &&
+            (head_y < (worm_body[i][1] + SPRITE_SIZE)) &&
+            ((head_y + SPRITE_SIZE) > worm_body[i][1])){
                 
                 face = FACE_SAD;
                 game_end();

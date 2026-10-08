@@ -1,9 +1,8 @@
 #include <stdint.h>
-
 #ifndef SPRITES_H
 #define SPRITES_H
 
-#include <stdint.h>
+
 
  // the sprite size is 10x10 pixels
 #define SPRITE_SIZE 10

@@ -3,7 +3,7 @@
 
 #define TIMER_STATUS 0x04000020 //tells whether a timeout happened
 #define TIMER_CONTROL 0x04000024 //tells the timer what to do
-#define TIMER_PERIODL 0x04000028 // tells hoe long the timer counts
+#define TIMER_PERIODL 0x04000028 // tells how long the timer counts
 #define TIMER_PERIODH 0x0400002C
 // for a 1 second interval we need 30,00,00 clock cycles = 30 MHz
 // 3,000,000 decimal = 0x002DC6C0

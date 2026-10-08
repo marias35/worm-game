@@ -6,7 +6,6 @@
 #include "worm.h"
 #include "game.h"
 #include "timer.h"
-#include <stdint.h>
 
 static int score = 0; 
 static int game_over = 0;

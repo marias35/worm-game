@@ -1,7 +1,9 @@
 //Maria
 
 #include "timer.h"
-static volatile int time_left = 120; // we use volatile because we need to be able to hange those variables during interrupt handling
+// we use volatile here because these values can be changed by the timer interrupt 
+// it makes the main code read the variables from the memory every time so the main code for usre sees the newest value
+static volatile int time_left = 120; 
 static volatile int timeout_counter = 0; 
 static volatile int timer = 0; // if the timer runs or not
 static volatile int movement_counter = 0;
@@ -52,6 +54,8 @@ void init_timer(){
     *(volatile int *)TIMER_PERIODL = 0xC6C0;
     *(volatile int *)TIMER_PERIODH = 0x002D;
     *(volatile int *)TIMER_STATUS = 0;
+    set_displays(4, 0);
+    set_displays(5, 0);
 }
 
 void start_timer(){

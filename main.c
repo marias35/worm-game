@@ -6,7 +6,7 @@
 #include "worm.h"
 #include "input.h"
 #include "objects_functions.h"
-#include <stdint.h>
+
 
 extern void enable_interrupt();
 
